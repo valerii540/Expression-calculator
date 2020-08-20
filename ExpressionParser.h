@@ -109,7 +109,7 @@ class ExpressionParser {
 
         vector<string> refined_tokens;
         refined_tokens.insert(refined_tokens.end(), tokens.begin(), tokens.begin() + starting_par - 1);
-        refined_tokens.push_back(to_string(inner_result));
+        refined_tokens.push_back(Node::to_string(inner_result));
         refined_tokens.insert(refined_tokens.end(), tokens.begin() + closing_par + 1, tokens.end());
 
         cout << "refined: ";
@@ -122,7 +122,7 @@ class ExpressionParser {
 
     void resolveUnaryTokens(vector<string>& tokens) {
         if (tokens.size() >= 2 && tokens[0] == "-" && !Node::isOperator(tokens[1])) {
-            tokens[1] = "-" + tokens[1];
+            tokens[1] = Node::to_string(atof(tokens[1].c_str()) * -1);
             tokens.erase(tokens.begin());
         }
 
@@ -137,7 +137,7 @@ class ExpressionParser {
                     tokens.erase(tokens.begin() + i);
                 }
                 else if(tokens[i+1] == "-") {
-                    tokens[i + 2] = "-" + tokens[i + 2];
+                    tokens[i + 2] = Node::to_string(atof(tokens[i + 2].c_str()) * -1);
                     tokens.erase(tokens.begin() + i + 1);
                 }
             }
@@ -149,7 +149,7 @@ class ExpressionParser {
 
 public:
     ExpressionParser(const string expression) {
-        root_ = Node();
+        root_ = Node("#");
 
         const regex r("\\d+\\.?\\d*|\\-|\\+|\\*|\\/|\\(|\\)");
 
@@ -171,7 +171,7 @@ public:
     }
 
     ExpressionParser(vector<string>& vec) {
-        root_ = Node();
+        root_ = Node("#");
         vec_  = vector<string>(vec);
 
         build(root_, vec_);

@@ -4,6 +4,7 @@
 #include <cassert>
 
 int main(int argc, char** argv) {
+    cout.precision(21);
     //    if (argc < 2) throw invalid_argument("Expression must be specified as cmd line argument");
     if (argc < 2) {
         while(1) {

@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <sstream>
 
 using namespace std;
 
@@ -33,12 +34,11 @@ public:
     }
 
     static bool isOperator(string token) {
-        return token.find_first_of("+-*/") != string::npos;
+        return token == "+" || token == "-" || token == "*" || token == "/";
     }
 
     double calculate() {
         if (literal_ == "-")
-//            return (leftChild_ && !isOperator(leftChild_->literal_) ? leftChild_->calculate() - rightChild_->calculate() : - rightChild_->calculate());
             return leftChild_->calculate() - rightChild_->calculate();
         else if (literal_ == "+")
             return leftChild_->calculate() + rightChild_->calculate();
@@ -46,14 +46,15 @@ public:
             return leftChild_->calculate() * rightChild_->calculate();
         else if (literal_ == "/")
             return leftChild_->calculate() / rightChild_->calculate();
-        else if (literal_ == "^")
-            return pow(leftChild_->calculate(), rightChild_->calculate());
-        else if (literal_ == "√")
-            return pow(rightChild_->calculate(), leftChild_->calculate());
-        else if (literal_ == "#")
-            throw runtime_error("Calculating empty node!");
         else
             return atof(literal_.c_str());
+    }
+
+    static string to_string(const double a_value, const int n = 21) {
+        ostringstream out;
+        out.precision(n);
+        out << fixed << a_value;
+        return out.str();
     }
 };
 
