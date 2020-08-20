@@ -5,7 +5,6 @@
 
 int main(int argc, char** argv) {
     cout.precision(21);
-    //    if (argc < 2) throw invalid_argument("Expression must be specified as cmd line argument");
     if (argc < 2) {
         while(1) {
             string input;
@@ -14,13 +13,13 @@ int main(int argc, char** argv) {
             getline(cin, input);
 
             ExpressionParser parser(input);
-            cout << parser.stringExperssion() << "= " << parser.calculate() << endl << endl;
+            cout << input << "= " << parser.calculate() << endl << endl;
         }
 
     } else {
         ExpressionParser parser(argv[1]);
 
-        cout << parser.stringExperssion() << "= " << parser.calculate() << endl;
+        cout << argv[1] << " = " << parser.calculate() << endl;
     }
 
     return 0;
